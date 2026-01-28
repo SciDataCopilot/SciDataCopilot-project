@@ -6,7 +6,7 @@
   
   <!-- Primary Meta Tags -->
   <!-- TODO: Replace with your paper title and author names -->
-  <meta name="title" content="PAPER_TITLE - AUTHOR_NAMES">
+  <meta name="title" content="SciDataCopilot">
   <!-- TODO: Write a compelling 150-160 character description of your research -->
   <meta name="description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
   <!-- TODO: Add 5-10 relevant keywords for your research area -->
@@ -240,22 +240,20 @@
             <!-- TODO: Replace with your paper title -->
             <h1 class="title is-1 publication-title">SciDataCopilot: Laying the Data Engine for Scientific AI-Ready Workflows</h1>
             <div class="is-size-5 publication-authors">
-              <!-- TODO: Replace with your paper authors and their personal links -->
-              <span class="author-block">
-                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">First Author</a><sup>*</sup>,</span>
-                <span class="author-block">
-                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Second Author</a><sup>*</sup>,</span>
-                  <span class="author-block">
-                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Third Author</a>
-                  </span>
-                  </div>
+              <span class="author-block">Jiyong Rao,</span>
+              <span class="author-block">Jiahui Zhang,</span>
+              <span class="author-block">Yicheng Qiu,</span>
+              <span class="author-block">Juntao Deng,</span>
+              <span class="author-block">Shangquan Sun,</span>
+              <span class="author-block">Xiang Liu,</span>
+              <span class="author-block">Runkai Zhao,</span>
+              <span class="author-block">Chi Zhang,</span>
+              <span class="author-block">and Chunfeng Song</span>
+            </div>
 
-                  <div class="is-size-5 publication-authors">
-                    <!-- TODO: Replace with your institution and conference/journal info -->
-                    <span class="author-block">Institution Name<br>Conference name and year</span>
-                    <!-- TODO: Remove this line if no equal contribution -->
-                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
-                  </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Scientific Data Team AT AI4S Center, Shanghai Artificial Intelligence Laboratory</span>
+            </div>
 
                   <div class="column has-text-centered">
                     <div class="publication-links">
@@ -315,14 +313,10 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <!-- TODO: Replace with your teaser video -->
-      <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
-        <!-- TODO: Add your video file path here -->
-        <source src="static/videos/banner_video.mp4" type="video/mp4">
-      </video>
-      <!-- TODO: Replace with your video description -->
+      <img src="static/images/DataCopilot_pipeline.png" alt="SciDataCopilot pipeline" loading="lazy"/>
+      <!-- TODO: Replace with your image description -->
       <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
+        Architecture of SciDataCopilot. The framework integrates four collaborative agents (Data Access, Intent Parsing, Data Processing, and Data Integration) to autonomously align user intents with complex data resources. Ultimately, SciDataCopilot bridges heterogeneous scientific data with specific models, redefining task-guided data customization and cross-disciplinary integration to empower diverse scientific research tasks. 
       </h2>
     </div>
   </div>
@@ -338,7 +332,21 @@
         <div class="content has-text-justified">
           <!-- TODO: Replace with your paper abstract -->
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+            Recent progress in AI for Science has been driven primarily by AI-ready scientific corpora derived from
+            structured literature. However, extending these approaches to experimental scientific data remains
+            challenging due to task-dependent data requirements, fragmented data sources across disciplines, and
+            tight coupling between data processing and domain-specific expertise. To address this, we propose
+            SciDataCopilot, a unified multi-agent framework grounded in a novel Scientific AI-Ready Scientific
+            Data paradigm. Scientific AI-Ready extends conventional AI-ready data by explicitly formalizing how
+            scientific data are specified, structured, and composed with respect to downstream computational models
+            and experimental workflows. Specifically, the paradigm introduces task-conditioned data specification
+            to map scientific objectives to data schemas and constraints. It further defines model-aware data
+            structuring and principled cross-domain data composition, enabling heterogeneous experimental data to
+            be transformed into interoperable, model-consumable forms. SciDataCopilot instantiates this paradigm
+            through a unified workflow that performs data ingestion, scientific intent parsing, data processing, and
+            multimodal data integration. By placing data at the core of scientific workflows, SciDataCopilot provides
+            a principled foundation for reusable, transferable systems, enabling the transition toward general and
+            experiment-driven scientific intelligence.
           </p>
         </div>
       </div>
