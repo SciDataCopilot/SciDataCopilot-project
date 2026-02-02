@@ -278,6 +278,16 @@ body {
   align-items: start;
 }
 
+.protein-case-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.protein-left,
+.protein-right {
+  display: grid;
+  gap: 1.25rem;
+}
+
 .case-left {
   display: grid;
   gap: 1.25rem;
@@ -361,6 +371,203 @@ body {
 
 .case-question {
   padding: 1.75rem;
+}
+
+.protein-display {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.protein-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.protein-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7b8a9c;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.protein-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.protein-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.protein-action {
+  border: none;
+  background: #478DA2;
+  color: #ffffff;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(71, 141, 162, 0.25);
+}
+
+.protein-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.protein-stat-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.85rem 1rem;
+}
+
+.protein-stat-label {
+  font-size: 0.75rem;
+  color: #7b8a9c;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.protein-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.35rem;
+}
+
+.protein-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.protein-block {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 1.1rem 1.2rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.protein-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.protein-chip {
+  background: rgba(71, 141, 162, 0.12);
+  color: #478DA2;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.protein-pair {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.protein-sequence {
+  background: #f4f6fa;
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  min-height: 52px;
+  height: 56px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  color: #6c7a89;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  word-break: normal;
+  -webkit-overflow-scrolling: touch;
+}
+
+.protein-reaction {
+  background: #f4f6fa;
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  min-height: 52px;
+  height: 56px;
+  color: #6c7a89;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  word-break: normal;
+  -webkit-overflow-scrolling: touch;
+}
+
+.protein-chem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.protein-chem-card {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.protein-chem-name {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.protein-structure {
+  min-height: 140px;
+  height: 180px;
+  border-radius: 14px;
+  border: 1px dashed rgba(71, 141, 162, 0.4);
+  background: linear-gradient(135deg, #f6fbfc, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7b8a9c;
+  font-weight: 600;
+  padding: 0.5rem;
+}
+
+.protein-structure img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1024px) {
+  .protein-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .protein-case-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .protein-chem-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .case-label {

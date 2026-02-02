@@ -454,60 +454,102 @@
         </div>
         <div class="user-cases-panels">
           <div class="case-panel is-active" data-case="protein" role="tabpanel">
-            <div class="case-layout">
-              <div class="case-left">
+            <div class="case-layout protein-case-layout">
+              <div class="protein-left">
                 <div class="case-card case-question">
                   <div class="case-label">INSTRUCTION</div>
-                  <p>Protein case question placeholder text.</p>
+                  <p>Download all enzyme catalysis data, including enzyme sequences and substrate--product reaction information.</p>
                 </div>
                 <div class="case-card case-figure">
-                  <div class="case-carousel-wrapper">
-                    <div class="case-carousel" data-carousel>
-                      <div class="case-carousel-track">
-                        <div class="case-slide">
-                          <img src="static/images/carousel1.jpg" alt="Protein case figure 1" loading="lazy" />
-                        </div>
-                        <div class="case-slide">
-                          <img src="static/images/carousel2.jpg" alt="Protein case figure 2" loading="lazy" />
-                        </div>
-                        <div class="case-slide">
-                          <img src="static/images/carousel3.jpg" alt="Protein case figure 3" loading="lazy" />
-                        </div>
+                  <div class="protein-display">
+                    <div class="protein-header">
+                      <div>
+                        <div class="protein-eyebrow">Statistics</div>
+                        <h3 class="protein-title">Overall</h3>
+                        <p class="protein-subtitle">Basic dataset statistics.</p>
                       </div>
+                    <a class="protein-action" href="static/excel/enzyme_data_100.xlsx" download aria-label="Export statistics">Export examples</a>
                     </div>
-                    <div class="case-carousel-dots" role="tablist" aria-label="Protein case figures">
-                      <button class="case-dot is-active" type="button" aria-label="Show protein figure 1" data-index="0"></button>
-                      <button class="case-dot" type="button" aria-label="Show protein figure 2" data-index="1"></button>
-                      <button class="case-dot" type="button" aria-label="Show protein figure 3" data-index="2"></button>
+                    <div class="protein-stats-grid">
+                      <div class="protein-stat-card">
+                        <div class="protein-stat-label">Total records</div>
+                        <div class="protein-stat-value">214,104</div>
+                      </div>
+                      <div class="protein-stat-card">
+                        <div class="protein-stat-label">Unique enzymes</div>
+                        <div class="protein-stat-value">168,576</div>
+                      </div>
+                      <div class="protein-stat-card">
+                        <div class="protein-stat-label">Unique substrates</div>
+                        <div class="protein-stat-value">4,485</div>
+                      </div>
+                      <div class="protein-stat-card">
+                        <div class="protein-stat-label">Unique products</div>
+                        <div class="protein-stat-value">5,754</div>
+                      </div>
+                      <div class="protein-stat-card">
+                        <div class="protein-stat-label">Unique RHEA</div>
+                        <div class="protein-stat-value">9,221</div>
+                      </div>
+                      <div class="protein-stat-card">
+                        <div class="protein-stat-label">Unique organisms</div>
+                        <div class="protein-stat-value">5,893</div>
+                      </div>
+                      <div class="protein-stat-card">
+                        <div class="protein-stat-label">Unique enzyme types</div>
+                        <div class="protein-stat-value">10</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="case-right">
-                <details class="case-collapse" open>
-                  <summary class="case-collapse-summary">
-                    <i class="fas fa-list"></i>
-                    <span>Plan</span>
-                  </summary>
-                  <div class="case-collapse-body">
-                    <ul>
-                      <li>Plan placeholder line.</li>
-                      <li>Additional planning step.</li>
-                    </ul>
+              <div class="protein-right">
+                <div class="case-card case-figure">
+                  <div class="protein-block">
+                    <div class="protein-block-header">
+                      <span>Protein</span>
+                      <span class="protein-chip">UniProt:Q96IZ6</span>
+                    </div>
+                    <div class="protein-pair">
+                      <span>Entry</span>
+                      <span>MET2A_HUMAN</span>
+                    </div>
+                    <div class="protein-pair">
+                      <span>Protein</span>
+                      <span>tRNA N(3)-cytidine methyltransferase METTL2A</span>
+                    </div>
+                    <div class="protein-pair">
+                      <span>Sequence length</span>
+                      <span>378</span>
+                    </div>
+                    <div class="protein-sequence">MAGSYPEGAPAVLADKRQQFGSRFLRDPARVFHHNAWDNVEWSEEQAAAAERKVQENSIQRVCQEKQVDYEINAHKYWNDFYKIHENGFFKDRHWLFTEFPELAPSQNQNHLKDWFLENKSEVPECRNNEDGPGLIMEEQHKCSSKSLEHKTQTLPVEENVTQKISDLEICADEFPGSSATYRILEVGCGVGNTVFPILQTNNDPGLFVYCCDFSSTAIELVQTNSEYDPSRCFAFVHDLCDEEKSYPVPKGSLDIIILIFVLSAIVPDKMQKAINRLSRLLKPGGMMLLRDYGRYDMAQLRFKKGQCLSGNFYVRGDGTRVYFFTQEELDTLFTTAGLEKVQNLVDRRLQVNRGKQLTMYRVWIQCKYCKPLLSSTS</div>
                   </div>
-                </details>
-                <details class="case-collapse" open>
-                  <summary class="case-collapse-summary">
-                    <i class="fas fa-brain"></i>
-                    <span>Analysis</span>
-                  </summary>
-                  <div class="case-collapse-body">
-                    <ul>
-                      <li>Analysis placeholder line.</li>
-                      <li>Another reasoning step.</li>
-                    </ul>
+                </div>
+                <div class="case-card case-figure">
+                  <div class="protein-block">
+                    <div class="protein-block-header">
+                      <span>Reaction</span>
+                      <span class="protein-chip">RHEA:50960</span>
+                    </div>
+                    <div class="protein-reaction">cytidine(32) in tRNA(Thr) + S-adenosyl-L-methionine = N(3)-methylcytidine(32) in tRNA(Thr) + S-adenosyl-L-homocysteine + H(+)</div>
+                    <div class="protein-chem-grid">
+                      <div class="protein-chem-card">
+                        <div class="protein-subtitle">Substrate</div>
+                        <div class="protein-chem-name">S-adenosyl-L-methionine (CHEBI:59789)</div>
+                        <div class="protein-structure">
+                          <img src="static/images/substrate.png" alt="Substrate molecule" loading="lazy" />
+                        </div>
+                      </div>
+                      <div class="protein-chem-card">
+                        <div class="protein-subtitle">Product</div>
+                        <div class="protein-chem-name">S-adenosyl-L-homocysteine (CHEBI:57856)</div>
+                        <div class="protein-structure">
+                          <img src="static/images/product.png" alt="Product molecule" loading="lazy" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </details>
+                </div>
               </div>
             </div>
           </div>
@@ -638,7 +680,7 @@
               <div class="case-left">
                 <div class="case-card case-question">
                   <div class="case-label">INSTRUCTION</div>
-                  <p>Polar case question placeholder text.</p>
+                  <p>Analyze and process polar datasets by merging and standardizing table headers, ensuring data consistency, and splitting the data into monthly segments for further scientific analysis.</p>
                 </div>
                 <div class="case-card case-figure">
                   <div class="case-carousel-wrapper">
@@ -675,8 +717,60 @@
                   </summary>
                   <div class="case-collapse-body">
                     <ul>
-                      <li>Plan placeholder line.</li>
-                      <li>Additional descriptive point.</li>
+                      <li>{</li>
+                      <li>  "plan_id": "70d20a03-8fc8-4603-b01b-ee600d518077",</li>
+                      <li>  "name": "Custom Processing Plan",</li>
+                      <li>  "description": "Rule-based plan for custom task",</li>
+                      <li>  "objective": "对数据进行合并整合，涉及变量: 月",</li>
+                      <li>  "data_unit_plans": [</li>
+                      <li>    {</li>
+                      <li>      "unit_id": "unit_1",</li>
+                      <li>      "unit_name": "Data Loading",</li>
+                      <li>      "source_path": "",</li>
+                      <li>      "processing_description": "Load and inspect data",</li>
+                      <li>      "suggested_tools": [</li>
+                      <li>        "pandas_reader",</li>
+                      <li>        "data_inspector"</li>
+                      <li>      ],</li>
+                      <li>      "parameters": {},</li>
+                      <li>      "priority": 1,</li>
+                      <li>      "dependencies": []</li>
+                      <li>    },</li>
+                      <li>    {</li>
+                      <li>      "unit_id": "unit_2",</li>
+                      <li>      "unit_name": "Data Processing",</li>
+                      <li>      "source_path": "",</li>
+                      <li>      "processing_description": "对数据进行合并整合，涉及变量: 月",</li>
+                      <li>      "suggested_tools": [</li>
+                      <li>        "custom_processor"</li>
+                      <li>      ],</li>
+                      <li>      "parameters": {},</li>
+                      <li>      "priority": 2,</li>
+                      <li>      "dependencies": [</li>
+                      <li>        "unit_1"</li>
+                      <li>      ]</li>
+                      <li>    }</li>
+                      <li>  ],</li>
+                      <li>  "integration_description": "Integrate processed results and export",</li>
+                      <li>  "integration_tools": [</li>
+                      <li>    "quality_check",</li>
+                      <li>    "output_formatter"</li>
+                      <li>  ],</li>
+                      <li>  "total_steps": 3,</li>
+                      <li>  "estimated_complexity": "low",</li>
+                      <li>  "validation_status": "pending",</li>
+                      <li>  "revision_history": [</li>
+                      <li>    {</li>
+                      <li>      "version": 1,</li>
+                      <li>      "source": "llm_generation"</li>
+                      <li>    },</li>
+                      <li>    {</li>
+                      <li>      "version": 2,</li>
+                      <li>      "feedback": "Overall Score: 0.60\nStatus: NEEDS REVISION\n\nCompleteness: 1.00 [PASS]\nFeasibility: 0.80 [PASS]\n  - Issue: First step has no source path\nLogical Consistency: 0.00 [FAIL]\n  - Issue: Invalid dependency: 输入盘点与元数据确认 not in plan\n  - Issue: Invalid dependency: “月”字段抽取结果校验与解析 not in plan\n  - Issue: Invalid dependency: 标准化“月”时间键 not in plan",</li>
+                      <li>      "source": "llm_revision"</li>
+                      <li>    }</li>
+                      <li>  ]</li>
+                      <li>}</li>
                     </ul>
                   </div>
                 </details>
@@ -687,7 +781,145 @@
                   </summary>
                   <div class="case-collapse-body">
                     <ul>
-                      <li>Reasoning trace placeholder line.</li>
+                      <li>## Processing Summary</li>
+                      <li>### Processing steps performed</li>
+                      <li>Based on the reported outputs and task context (hourly → daily aggregation), the workflow can be interpreted as:</li>
+
+                      <li>1. **Ingestion and parsing**</li>
+                      <li>   - Loaded time-stamped (hourly) observational records from the source dataset(s).</li>
+                      <li>   - Parsed timestamps into a consistent datetime type suitable for resampling/aggregation.</li>
+
+                      <li>2. **Temporal standardization**</li>
+                      <li>   - Harmonized time fields to a consistent temporal axis (e.g., ensuring each record maps unambiguously to an hour and a calendar day).</li>
+                      <li>   - Prepared data for daily roll-up (e.g., extracting date, year-month keys).</li>
+
+                      <li>3. **Hourly → daily aggregation**</li>
+                      <li>   - Aggregated hourly values into daily values using appropriate summary operations (commonly daily mean/sum/min/max depending on variable type).</li>
+                      <li>   - Produced a daily time series for each month.</li>
+
+                      <li>4. **Monthly partitioning and export**</li>
+                      <li>   - Split the resulting daily dataset by month.</li>
+                      <li>   - Exported each month to a separate Excel workbook.</li>
+
+                      <li>### Data transformations applied</li>
+                      <li>- **Datetime conversion and indexing** (enables resampling).</li>
+                      <li>- **Daily aggregation from hourly records** (reduces temporal granularity; typically reduces noise and missingness impact but can hide intra-day variability).</li>
+                      <li>- **Monthly slicing/partitioning** (organizational transformation; improves usability and file size management).</li>
+                      <li>- Potential implicit steps that often accompany this pipeline (not explicitly reported but consistent with the quality improvement):</li>
+                      <li>  - **Handling missing/duplicate timestamps** during grouping.</li>
+                      <li>  - **Type normalization** (numeric columns cast consistently).</li>
+
+                      <li>### Output files generated</li>
+                      <li>A set of monthly Excel files, each representing a month of **daily** aggregated data:</li>
+                      <li>- `data_2005_08.xlsx`</li>
+                      <li>- `data_2005_09.xlsx`</li>
+                      <li>- `data_2005_10.xlsx`</li>
+                      <li>- `data_2005_11.xlsx`</li>
+                      <li>- `data_2005_12.xlsx`</li>
+                      <li>- `data_2006_01.xlsx`</li>
+                      <li>- `data_2006_02.xlsx`</li>
+                      <li>- `data_2006_03.xlsx`</li>
+                      <li>- `data_2006_04.xlsx`</li>
+                      <li>- `data_2006_05.xlsx`</li>
+                      <li>- `data_2006_06.xlsx`</li>
+                      <li>- `data_2006_07.xlsx`</li>
+
+                      <li>Processing status indicates: **Processing success = True**.</li>
+
+                      <li>---</li>
+
+                      <li>## Monthly Files Generated</li>
+
+                      <li>### Count of monthly Excel files</li>
+                      <li>- **12 monthly Excel files** were generated.</li>
+
+                      <li>### Date range covered</li>
+                      <li>- From **August 2005 (2005-08)** through **July 2006 (2006-07)**, inclusive.</li>
+                      <li>- This is a continuous 12-month span.</li>
+
+                      <li>### File organization structure</li>
+                      <li>- **One file per month**, named with a clear `data_YYYY_MM.xlsx` convention.</li>
+                      <li>- This structure is well-suited for:</li>
+                      <li>  - Incremental updates</li>
+                      <li>  - Parallel processing</li>
+                      <li>  - Downstream ingestion</li>
+
+                      <li>---</li>
+
+                      <li>## Aggregation Verification</li>
+
+                      <li>### Verification that hourly → daily aggregation was successful</li>
+                      <li>Evidence supporting successful aggregation:</li>
+                      <li>- The outputs are **monthly** files.</li>
+                      <li>- The **quality scores improved**.</li>
+
+                      <li>### Check for data completeness</li>
+                      <li>At daily resolution, completeness typically means:</li>
+                      <li>- Every expected calendar day is present.</li>
+                      <li>- Missing daily values encoded consistently.</li>
+
+                      <li>### Validate temporal consistency</li>
+                      <li>- Ensure timestamps are monotonic.</li>
+                      <li>- Verify no gaps or overlaps.</li>
+                      <li>- Confirm consistent use of UTC.</li>
+
+                      <li>---</li>
+
+                      <li>## Quality Assessment</li>
+
+                      <li>### Baseline vs current quality scores</li>
+                      <li>**Baseline quality**</li>
+                      <li>- Total: **0.5319**</li>
+                      <li>- Intrinsic: **0.5797**</li>
+                      <li>- Distributional: **0.0000527**</li>
+                      <li>- Utility: **1.0**</li>
+
+                      <li>**Current quality**</li>
+                      <li>- Total: **0.6140**</li>
+                      <li>- Intrinsic: **0.6989**</li>
+                      <li>- Distributional: **0.1150**</li>
+                      <li>- Utility: **1.0**</li>
+
+                      <li>**Net improvement**</li>
+                      <li>- Total score improved by **+0.082**</li>
+
+                      <li>### Interpretation of components</li>
+                      <li>- **Intrinsic quality** improved.</li>
+                      <li>- **Distributional quality** improved.</li>
+                      <li>- **Utility** unchanged.</li>
+
+                      <li>### Data integrity after processing</li>
+                      <li>- Improved integrity.</li>
+                      <li>- Remaining risk areas.</li>
+
+                      <li>---</li>
+
+                      <li>## Recommendations</li>
+
+                      <li>### 1) Add aggregation provenance and coverage metrics</li>
+                      <li>- Include per-day fields.</li>
+                      <li>- Flag low-coverage days.</li>
+
+                      <li>### 2) Perform targeted distributional QA/QC</li>
+                      <li>- Run automated checks.</li>
+                      <li>- Compare monthly histograms.</li>
+
+                      <li>### 3) Validate temporal continuity</li>
+                      <li>- Verify no missing days.</li>
+                      <li>- Ensure consistent timestamps.</li>
+
+                      <li>### 4) Standardize metadata and naming conventions</li>
+                      <li>- Include station/site metadata.</li>
+                      <li>- Include units and processing history.</li>
+
+                      <li>### 5) Next steps for analysis</li>
+                      <li>- Merge monthly files.</li>
+                      <li>- Compute derived indices.</li>
+                      <li>- Assess spatial coherence.</li>
+
+                      <li>---</li>
+
+                      <li>If you can share the column schema, I can propose tailored aggregation and QC rules.</li>
                     </ul>
                   </div>
                 </details>
