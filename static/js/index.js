@@ -119,6 +119,38 @@ function setupVideoCarouselAutoplay() {
     });
 }
 
+function setupUserCasesTabs() {
+    const tabs = document.querySelectorAll('.case-tab');
+    const panels = document.querySelectorAll('.case-panel');
+
+    if (tabs.length === 0 || panels.length === 0) return;
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-case');
+
+            tabs.forEach(btn => {
+                btn.classList.remove('is-active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+
+            panels.forEach(panel => {
+                panel.classList.remove('is-active');
+                panel.setAttribute('aria-hidden', 'true');
+            });
+
+            tab.classList.add('is-active');
+            tab.setAttribute('aria-selected', 'true');
+
+            const activePanel = document.querySelector(`.case-panel[data-case="${target}"]`);
+            if (activePanel) {
+                activePanel.classList.add('is-active');
+                activePanel.setAttribute('aria-hidden', 'false');
+            }
+        });
+    });
+}
+
 $(document).ready(function() {
     // Check for click events on the navbar burger icon
 
@@ -138,5 +170,6 @@ $(document).ready(function() {
     
     // Setup video autoplay for carousel
     setupVideoCarouselAutoplay();
+    setupUserCasesTabs();
 
 })
