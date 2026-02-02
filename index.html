@@ -352,22 +352,14 @@
             <div class="content has-text-justified">
               <!-- TODO: Replace with your paper abstract -->
               <p>
-                Recent progress in AI for Science has been driven primarily by AI-ready scientific corpora derived from
-                structured literature. However, extending these approaches to experimental scientific data remains
-                challenging due to task-dependent data requirements, fragmented data sources across disciplines, and
-                tight coupling between data processing and domain-specific expertise. To address this, we propose
-                SciDataCopilot, a unified multi-agent framework grounded in a novel Scientific AI-Ready Scientific
-                Data paradigm. Scientific AI-Ready extends conventional AI-ready data by explicitly formalizing how
-                scientific data are specified, structured, and composed with respect to downstream computational models
-                and experimental workflows. Specifically, the paradigm introduces task-conditioned data specification
-                to map scientific objectives to data schemas and constraints. It further defines model-aware data
-                structuring and principled cross-domain data composition, enabling heterogeneous experimental data to
-                be transformed into interoperable, model-consumable forms. SciDataCopilot instantiates this paradigm
-                through a unified workflow that performs data ingestion, scientific intent parsing, data processing, and
-                multimodal data integration. By placing data at the core of scientific workflows, SciDataCopilot
-                provides
-                a principled foundation for reusable, transferable systems, enabling the transition toward general and
-                experiment-driven scientific intelligence.
+                Recent progress in AI for Science has been driven primarily by AI-ready scientific corpora derived from structured literature. However, extending these approaches to scientific data remains challenging due to task-dependent data requirements, fragmented and heterogeneous data sources, high structural and semantic complexity, and strong reliance on domain-specific knowledge.
+To address these challenges, we propose SciDataCopilot, a unified agentic framework grounded in the novel Scientific AI-Ready data paradigm.
+Scientific AI-Ready data paradigm extends conventional AI-ready practices by defining how scientific data are specified, structured, and composed to be directly usable by downstream scientific models and software.
+Specifically, the paradigm introduces task-conditioned data specification to map scientific instruction to required data schema and constraints, and emphasizes direct compatibility with downstream scientific utilization under explicit input constraints
+It further supports cross-modal and cross-disciplinary composition to enable consistent alignment across diverse domains.
+SciDataCopilot instantiates this paradigm through four coordinated agents for data access, intent parsing, data processing, and data integration. 
+Extensive evaluations across life science, neuroscience, and earth science demonstrate substantial gains in efficiency, scalability, and consistency over manual pipelines.
+In particular, SciDataCopilot achieves over 30× efficiency gains for cross-disciplinary meteorological data preparation compared with hand-crafted effort.
               </p>
             </div>
           </div>
