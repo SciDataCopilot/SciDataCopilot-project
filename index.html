@@ -461,7 +461,26 @@
                   <p>Protein case question placeholder text.</p>
                 </div>
                 <div class="case-card case-figure">
-                  <div class="case-media-placeholder">Protein case figure</div>
+                  <div class="case-carousel-wrapper">
+                    <div class="case-carousel" data-carousel>
+                      <div class="case-carousel-track">
+                        <div class="case-slide">
+                          <img src="static/images/carousel1.jpg" alt="Protein case figure 1" loading="lazy" />
+                        </div>
+                        <div class="case-slide">
+                          <img src="static/images/carousel2.jpg" alt="Protein case figure 2" loading="lazy" />
+                        </div>
+                        <div class="case-slide">
+                          <img src="static/images/carousel3.jpg" alt="Protein case figure 3" loading="lazy" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="case-carousel-dots" role="tablist" aria-label="Protein case figures">
+                      <button class="case-dot is-active" type="button" aria-label="Show protein figure 1" data-index="0"></button>
+                      <button class="case-dot" type="button" aria-label="Show protein figure 2" data-index="1"></button>
+                      <button class="case-dot" type="button" aria-label="Show protein figure 3" data-index="2"></button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="case-right">
@@ -500,7 +519,22 @@
                   <p>Using the MNE fieldtrip_cmc MEG dataset, perform Spatio-Spectral Decomposition (SSD) by resampling the raw data to 250 Hz and cropping it to a 60-second window (50–110s). Fit the SSD estimator using OAS regularization and zero-phase FIR filters, defining the signal band at 9–12 Hz and the noise band at 8–13 Hz (both with 1 Hz transition bandwidths) to isolate alpha oscillations from 1/f background activity. Validate the results by inverting the spatial filters to plot patterns, transforming the data to source space, and comparing the Welch PSD of the maximum and minimum SNR components to verify oscillatory enhancement.</p>
                 </div>
                 <div class="case-card case-figure">
-                  <div class="case-media-placeholder">Neuro case figure</div>
+                  <div class="case-carousel-wrapper">
+                    <div class="case-carousel" data-carousel>
+                      <div class="case-carousel-track">
+                        <div class="case-slide">
+                          <img src="static/images/ssd_psd_max_min.png" alt="Neuro case figure 1" loading="lazy" />
+                        </div>
+                        <div class="case-slide">
+                          <img src="static/images/ssd_top_patterns.png" alt="Neuro case figure 2" loading="lazy" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="case-carousel-dots" role="tablist" aria-label="Neuro case figures">
+                      <button class="case-dot is-active" type="button" aria-label="Show neuro figure 1" data-index="0"></button>
+                      <button class="case-dot" type="button" aria-label="Show neuro figure 2" data-index="1"></button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="case-right">
@@ -541,8 +575,58 @@
                   </summary>
                   <div class="case-collapse-body">
                     <ul>
-                      <li>Reasoning trace placeholder line.</li>
-                      <li>Another reasoning step.</li>
+                      <li>Summary of what the code does</li>
+                      <li>- Loads the MNE fieldtrip_cmc MEG dataset and keeps the CTF axial-gradiometer sensor set (MNE denotes CTF axial gradiometers as “mag”, which is what your picker selects).</li>
+                      <li>- Resamples to 250 Hz with MNE’s built-in anti-alias FIR, applies zero-phase FIR notch at 50/100 Hz, and band-pass filters:</li>
+                      <li>  - Signal band: 9–12 Hz (alpha)</li>
+                      <li>  - Noise (flank) bands: 8–9 Hz and 12–13 Hz</li>
+                      <li>  - All filters are zero-phase FIR (firwin) with 1 Hz transition bandwidths.</li>
+                      <li>- Crops to 50–110 s to get a contiguous 60-s segment.</li>
+                      <li>- Computes OAS-regularized covariances from the band-passed data:</li>
+                      <li>  - Cs from the 9–12 Hz band</li>
+                      <li>  - Cn from the concatenation of the two flank bands (8–9 and 12–13 Hz)</li>
+                      <li>- Solves the generalized eigenvalue problem Cs w = λ Cn w to obtain spatial filters W (SSD filters) and eigenvalues λ (SSD SNRs).</li>
+                      <li>- Computes spatial patterns by inverting the filters using the broadband (1–45 Hz) covariance: A = C_data W, and visualizes the first six patterns as sensor topomaps (averaging CTF triplets with identical positions to avoid plotting duplicates).</li>
+                      <li>- Projects broadband data into SSD source space S = W^T X_bb, computes Welch PSD for each component, and compares the component with the maximum SNR eigenvalue to the one with the minimum SNR eigenvalue, both visually (PSD plot) and via an alpha SNR ratio (alpha power / average flank power).</li>
+                      <li>- Saves all results, figures, and a JSON report with key metrics.</li>
+
+                      <li>Scientific interpretation</li>
+                      <li>- What the SSD is optimizing: The generalized eigenvectors w maximize the ratio of 9–12 Hz power to the power in the adjacent 8–9 and 12–13 Hz bands.</li>
+                      <li>- Expected spectral outcome:</li>
+                      <li>  - Maximum-SNR component: A clear, narrow peak near 10–11 Hz in the PSD.</li>
+                      <li>  - Minimum-SNR component: No pronounced alpha peak.</li>
+                      <li>- Expected spatial outcome (patterns):</li>
+                      <li>- The spatial patterns A are appropriate for neurophysiological interpretation.</li>
+                      <li>- Validation logic:</li>
+                      <li>  - Rank-order consistency.</li>
+                      <li>  - Alpha enhancement.</li>
+                      <li>  - Spatial plausibility.</li>
+
+                      <li>Methodological notes and minor code review</li>
+                      <li>- Channel picking: pick_meg_grad selects meg='mag'.</li>
+                      <li>- Covariance estimation: OAS is appropriate.</li>
+                      <li>- Noise covariance and flank concatenation: good practice.</li>
+                      <li>- Generalized eigen-solver: whitening via Cholesky.</li>
+                      <li>- Patterns scaling: normalization is acceptable.</li>
+                      <li>- Zero-phase filtering: avoids temporal shifts.</li>
+                      <li>- Deduplication of CTF triplets.</li>
+                      <li>- PSD parameters are reasonable.</li>
+
+                      <li>What to look for in your outputs</li>
+                      <li>- reports/ssd_analysis_report.json</li>
+                      <li>- figures/ssd_psd_max_min.png</li>
+                      <li>- figures/ssd_top_patterns.png</li>
+
+                      <li>Potential improvements or sensitivity checks</li>
+                      <li>- Broader signal bands.</li>
+                      <li>- Shift time window.</li>
+                      <li>- Improved pattern scaling.</li>
+                      <li>- Adjust for beta-band CMC.</li>
+
+                      <li>Bottom line</li>
+                      <li>- The implementation meets the requirement.</li>
+                      <li>- Successful SSD characteristics.</li>
+                      <li>- Use reports and figures for confirmation.</li>
                     </ul>
                   </div>
                 </details>
@@ -557,7 +641,30 @@
                   <p>Polar case question placeholder text.</p>
                 </div>
                 <div class="case-card case-figure">
-                  <div class="case-media-placeholder">Polar case figure</div>
+                  <div class="case-carousel-wrapper">
+                    <div class="case-carousel" data-carousel>
+                      <div class="case-carousel-track">
+                        <div class="case-slide">
+                          <img src="static/images/air_temp.png" alt="Polar case figure 1" loading="lazy" />
+                        </div>
+                        <div class="case-slide">
+                          <img src="static/images/diurnal.png" alt="Polar case figure 2" loading="lazy" />
+                        </div>
+                        <div class="case-slide">
+                          <img src="static/images/finger.png" alt="Polar case figure 2" loading="lazy" />
+                        </div>
+                        <div class="case-slide">
+                          <img src="static/images/rose.png" alt="Polar case figure 2" loading="lazy" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="case-carousel-dots" role="tablist" aria-label="Polar case figures">
+                      <button class="case-dot is-active" type="button" aria-label="Show polar figure 1" data-index="0"></button>
+                      <button class="case-dot" type="button" aria-label="Show polar figure 2" data-index="1"></button>
+                      <button class="case-dot" type="button" aria-label="Show polar figure 3" data-index="2"></button>
+                      <button class="case-dot" type="button" aria-label="Show polar figure 4" data-index="3"></button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="case-right">

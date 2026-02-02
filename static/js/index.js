@@ -151,6 +151,40 @@ function setupUserCasesTabs() {
     });
 }
 
+function setupCaseFigureCarousels() {
+    const wrappers = document.querySelectorAll('.case-carousel-wrapper');
+
+    wrappers.forEach(wrapper => {
+        const track = wrapper.querySelector('.case-carousel-track');
+        const slides = wrapper.querySelectorAll('.case-slide');
+        const dots = wrapper.querySelectorAll('.case-dot');
+
+        if (!track || slides.length === 0 || dots.length === 0) return;
+
+        const setActive = (index) => {
+            const clampedIndex = Math.max(0, Math.min(index, slides.length - 1));
+            track.style.transform = `translateX(-${clampedIndex * 100}%)`;
+
+            dots.forEach((dot, dotIndex) => {
+                const isActive = dotIndex === clampedIndex;
+                dot.classList.toggle('is-active', isActive);
+                dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+        };
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = Number(dot.getAttribute('data-index'));
+                if (!Number.isNaN(index)) {
+                    setActive(index);
+                }
+            });
+        });
+
+        setActive(0);
+    });
+}
+
 $(document).ready(function() {
     // Check for click events on the navbar burger icon
 
@@ -171,5 +205,6 @@ $(document).ready(function() {
     // Setup video autoplay for carousel
     setupVideoCarouselAutoplay();
     setupUserCasesTabs();
+    setupCaseFigureCarousels();
 
 })

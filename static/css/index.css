@@ -293,19 +293,70 @@ body {
   background: #f7f8fb;
 }
 
-.case-media-placeholder {
-  border-radius: 14px;
+.case-carousel-wrapper {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.case-carousel {
+  border-radius: 16px;
+  overflow: hidden;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  min-height: 200px;
+  height: 260px;
+}
+
+.case-carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  will-change: transform;
+  height: 100%;
+}
+
+.case-slide {
+  min-width: 100%;
+  background: #ffffff;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-light);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.75rem;
+}
+
+.case-slide img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.case-carousel-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.case-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #c9d3df;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.case-dot.is-active {
+  background: #478DA2;
+  transform: scale(1.2);
+}
+
+.case-dot:focus-visible {
+  outline: 2px solid rgba(71, 141, 162, 0.4);
+  outline-offset: 2px;
 }
 
 .case-question {
