@@ -578,28 +578,46 @@ In particular, SciDataCopilot achieves over 30× efficiency gains for cross-disc
                     <span>Plan</span>
                   </summary>
                   <div class="case-collapse-body">
-                    <ul>
-                      <li>Step 1: Acquire the MNE fieldtrip_cmc raw MEG dataset; mark bad channels and select only MEG channels, restricting analysis to planar gradiometers to avoid sensor-type scaling biases.</li>
-                      <li>Step 2: Resample the continuous raw data to 250 Hz using antialiasing consistent with MEG preprocessing.</li>
-                      <li>Step 3: Optionally perform artifact mitigation on the resampled continuous data (e.g., SSP/ICA for EOG/ECG and SSS/Maxwell filtering if available), and apply a 50/60 Hz notch to suppress line noise.</li>
-                      <li>Step 4: Define zero-phase FIR filter designs with 1 Hz transition bandwidths and padding long enough to avoid edge artifacts at 250 Hz; ensure feasibility of the filter lengths (automatic length selection) and zero-phase application.</li>
-                      <li>Step 5: Specify the SSD signal band as 9–12 Hz (zero-phase FIR, 1 Hz transitions).</li>
-                      <li>Step 6: Specify flanking SSD noise bands as two separate zero-phase FIR bandpasses: 8–9 Hz and 12–13 Hz (each with 1 Hz transitions). Do not include the signal band inside a single wide noise band.</li>
-                      <li>Step 7: Apply the three zero-phase FIR bandpasses (signal and two flanks) to the continuous resampled gradiometer data before any cropping, using adequate padding to avoid filter edge artifacts.</li>
-                      <li>Step 8: Crop the three filtered datasets to the 60 s analysis window (50–110 s), ensuring identical time spans and sensor selections.</li>
-                      <li>Step 9: Compute the signal-band sensor covariance from the 9–12 Hz filtered, cropped data.</li>
-                      <li>Step 10: Compute the two flank-band sensor covariances from the 8–9 Hz and 12–13 Hz filtered, cropped data, then form the SSD noise covariance as the sum or average of the two flank covariances.</li>
-                      <li>Step 11: Apply OAS regularization to both the signal-band and noise-band covariances.</li>
-                      <li>Step 12: Solve the generalized eigenvalue problem that maximizes the ratio of signal-band to noise-band power to obtain SSD spatial filters (W) and eigenvalues (SNR scores), and sort components by descending eigenvalue.</li>
-                      <li>Step 13: Prepare broadband projection data by selecting the same sensors and cropping interval (50–110 s) from the resampled data; optionally apply a zero-phase 1–45 Hz bandpass to the continuous data before cropping (or use unfiltered broadband) to avoid trivial band-shaping during validation.</li>
-                      <li>Step 14: Compute the broadband data covariance (C_data) from the broadband cropped data of Step 13 to be used for interpretable pattern estimation.</li>
-                      <li>Step 15: Compute spatial patterns (sensor topographies) as A = C_data × W, and visualize the top-ranked patterns to assess plausible alpha generator topographies.</li>
-                      <li>Step 16: Project the broadband cropped data (from Step 13) through the SSD spatial filters (W) to obtain SSD component (source-space) time series.</li>
-                      <li>Step 17: Compute Welch power spectral densities for all SSD component time series using parameters that yield frequency resolution ≤ 0.5 Hz (e.g., segment length ≥ 4 s with 50% overlap, Hann window, detrend set to constant), and evaluate spectra across a broad range (e.g., 1–45 Hz).</li>
-                      <li>Step 18: Identify the components with maximum and minimum SSD SNR (largest and smallest eigenvalues) and compare their Welch PSDs to verify oscillatory enhancement: confirm a pronounced alpha peak (9–12 Hz) in the maximum-SNR component and attenuation in the minimum-SNR component.</li>
-                      <li>Step 19: Quantify alpha-band SNR by comparing integrated power in 9–12 Hz against the immediate flank bands (8–9 Hz and 12–13 Hz), and report ratios for the maximum- and minimum-SNR components.</li>
-                      <li>Step 20: Document and save SSD outputs, including spatial filters (W), spatial patterns (A), component time series, eigenvalues, and PSD comparisons, together with notes on filter parameters, padding strategy, sensor selection, and any artifact cleaning applied.</li>
-                    </ul>
+                    <div class="case-plan">
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">Data preparation</div>
+                        <ol class="case-steps">
+                          <li>Acquire the MNE fieldtrip_cmc raw MEG dataset, mark bad channels, and keep MEG planar gradiometers to avoid sensor-type scaling bias.</li>
+                          <li>Resample the continuous raw data to 250 Hz with anti-aliasing.</li>
+                          <li>Optionally apply artifact mitigation (SSP/ICA for EOG/ECG, SSS/Maxwell if available) and a 50/60 Hz notch.</li>
+                          <li>Define zero-phase FIR filters with 1 Hz transitions and adequate padding for 250 Hz.</li>
+                        </ol>
+                      </div>
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">Band definition & filtering</div>
+                        <ol class="case-steps">
+                          <li>Set the SSD signal band to 9–12 Hz (zero-phase FIR, 1 Hz transitions).</li>
+                          <li>Define flank noise bands as 8–9 Hz and 12–13 Hz (separate zero-phase FIR filters).</li>
+                          <li>Apply signal + flank filters to continuous data before cropping, using adequate padding.</li>
+                          <li>Crop filtered datasets to the 60 s window (50–110 s) with identical spans and sensors.</li>
+                        </ol>
+                      </div>
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">SSD estimation</div>
+                        <ol class="case-steps">
+                          <li>Compute signal-band covariance from 9–12 Hz data.</li>
+                          <li>Compute flank-band covariances and combine them into the noise covariance.</li>
+                          <li>Apply OAS regularization to both covariances.</li>
+                          <li>Solve the generalized eigenvalue problem to obtain filters W and SNR scores.</li>
+                        </ol>
+                      </div>
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">Validation & reporting</div>
+                        <ol class="case-steps">
+                          <li>Prepare broadband data (same sensors and window; optional 1–45 Hz bandpass).</li>
+                          <li>Compute broadband covariance C_data for interpretable patterns.</li>
+                          <li>Derive spatial patterns A = C_data × W and visualize top ranks.</li>
+                          <li>Project to SSD source space and compute Welch PSDs (≤ 0.5 Hz resolution).</li>
+                          <li>Compare max/min SNR components to confirm alpha enhancement.</li>
+                          <li>Quantify alpha SNR ratios and save filters, patterns, PSDs, and reports.</li>
+                        </ol>
+                      </div>
+                    </div>
                   </div>
                 </details>
                 <details class="case-collapse" open>
@@ -608,60 +626,56 @@ In particular, SciDataCopilot achieves over 30× efficiency gains for cross-disc
                     <span>Analysis</span>
                   </summary>
                   <div class="case-collapse-body">
-                    <ul>
-                      <li>Summary of what the code does</li>
-                      <li>- Loads the MNE fieldtrip_cmc MEG dataset and keeps the CTF axial-gradiometer sensor set (MNE denotes CTF axial gradiometers as “mag”, which is what your picker selects).</li>
-                      <li>- Resamples to 250 Hz with MNE’s built-in anti-alias FIR, applies zero-phase FIR notch at 50/100 Hz, and band-pass filters:</li>
-                      <li>  - Signal band: 9–12 Hz (alpha)</li>
-                      <li>  - Noise (flank) bands: 8–9 Hz and 12–13 Hz</li>
-                      <li>  - All filters are zero-phase FIR (firwin) with 1 Hz transition bandwidths.</li>
-                      <li>- Crops to 50–110 s to get a contiguous 60-s segment.</li>
-                      <li>- Computes OAS-regularized covariances from the band-passed data:</li>
-                      <li>  - Cs from the 9–12 Hz band</li>
-                      <li>  - Cn from the concatenation of the two flank bands (8–9 and 12–13 Hz)</li>
-                      <li>- Solves the generalized eigenvalue problem Cs w = λ Cn w to obtain spatial filters W (SSD filters) and eigenvalues λ (SSD SNRs).</li>
-                      <li>- Computes spatial patterns by inverting the filters using the broadband (1–45 Hz) covariance: A = C_data W, and visualizes the first six patterns as sensor topomaps (averaging CTF triplets with identical positions to avoid plotting duplicates).</li>
-                      <li>- Projects broadband data into SSD source space S = W^T X_bb, computes Welch PSD for each component, and compares the component with the maximum SNR eigenvalue to the one with the minimum SNR eigenvalue, both visually (PSD plot) and via an alpha SNR ratio (alpha power / average flank power).</li>
-                      <li>- Saves all results, figures, and a JSON report with key metrics.</li>
-
-                      <li>Scientific interpretation</li>
-                      <li>- What the SSD is optimizing: The generalized eigenvectors w maximize the ratio of 9–12 Hz power to the power in the adjacent 8–9 and 12–13 Hz bands.</li>
-                      <li>- Expected spectral outcome:</li>
-                      <li>  - Maximum-SNR component: A clear, narrow peak near 10–11 Hz in the PSD.</li>
-                      <li>  - Minimum-SNR component: No pronounced alpha peak.</li>
-                      <li>- Expected spatial outcome (patterns):</li>
-                      <li>- The spatial patterns A are appropriate for neurophysiological interpretation.</li>
-                      <li>- Validation logic:</li>
-                      <li>  - Rank-order consistency.</li>
-                      <li>  - Alpha enhancement.</li>
-                      <li>  - Spatial plausibility.</li>
-
-                      <li>Methodological notes and minor code review</li>
-                      <li>- Channel picking: pick_meg_grad selects meg='mag'.</li>
-                      <li>- Covariance estimation: OAS is appropriate.</li>
-                      <li>- Noise covariance and flank concatenation: good practice.</li>
-                      <li>- Generalized eigen-solver: whitening via Cholesky.</li>
-                      <li>- Patterns scaling: normalization is acceptable.</li>
-                      <li>- Zero-phase filtering: avoids temporal shifts.</li>
-                      <li>- Deduplication of CTF triplets.</li>
-                      <li>- PSD parameters are reasonable.</li>
-
-                      <li>What to look for in your outputs</li>
-                      <li>- reports/ssd_analysis_report.json</li>
-                      <li>- figures/ssd_psd_max_min.png</li>
-                      <li>- figures/ssd_top_patterns.png</li>
-
-                      <li>Potential improvements or sensitivity checks</li>
-                      <li>- Broader signal bands.</li>
-                      <li>- Shift time window.</li>
-                      <li>- Improved pattern scaling.</li>
-                      <li>- Adjust for beta-band CMC.</li>
-
-                      <li>Bottom line</li>
-                      <li>- The implementation meets the requirement.</li>
-                      <li>- Successful SSD characteristics.</li>
-                      <li>- Use reports and figures for confirmation.</li>
-                    </ul>
+                    <div class="case-sections">
+                      <div class="case-section">
+                        <div class="case-section-title">Summary of execution</div>
+                        <ul class="case-bullets">
+                          <li>Loads the MNE fieldtrip_cmc dataset and keeps the CTF axial-gradiometer set (MNE uses meg="mag" for this sensor group).</li>
+                          <li>Resamples to 250 Hz, applies zero-phase notch at 50/100 Hz, and band-pass filters for SSD signal (9–12 Hz) and flanks (8–9, 12–13 Hz).</li>
+                          <li>Crops to 50–110 s, builds OAS-regularized covariances, and solves Cs w = λ Cn w for SSD filters and SNR scores.</li>
+                          <li>Computes patterns A = C_data W from broadband covariance, then projects source space and compares Welch PSDs.</li>
+                          <li>Saves figures and JSON report with metrics and topographies.</li>
+                        </ul>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Scientific interpretation</div>
+                        <ul class="case-bullets">
+                          <li>SSD maximizes 9–12 Hz power relative to adjacent 8–9 and 12–13 Hz bands.</li>
+                          <li>Expected spectrum: pronounced 10–11 Hz peak for max-SNR, flat spectrum for min-SNR.</li>
+                          <li>Patterns A are intended for neurophysiological interpretation; spatial plausibility is a key check.</li>
+                          <li>Validation emphasizes rank-order consistency, alpha enhancement, and spatial plausibility.</li>
+                        </ul>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Method notes</div>
+                        <ul class="case-bullets">
+                          <li>Channel picking uses pick_meg_grad with meg="mag".</li>
+                          <li>OAS is appropriate for covariance estimation.</li>
+                          <li>Zero-phase FIR prevents temporal shifts; flank concatenation is standard practice.</li>
+                          <li>Cholesky whitening and pattern scaling are acceptable.</li>
+                          <li>PSD settings are reasonable for ≤ 0.5 Hz resolution.</li>
+                        </ul>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Outputs to review</div>
+                        <div class="case-file-list">
+                          <span>reports/ssd_analysis_report.json</span>
+                          <span>figures/ssd_psd_max_min.png</span>
+                          <span>figures/ssd_top_patterns.png</span>
+                        </div>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Potential improvements</div>
+                        <ul class="case-bullets">
+                          <li>Evaluate broader signal bands or time-window shifts.</li>
+                          <li>Test alternative pattern scaling.</li>
+                          <li>Consider beta-band CMC adjustments if needed.</li>
+                        </ul>
+                      </div>
+                      <div class="case-section case-section-highlight">
+                        <p>The implementation meets the requirement; use the report and figures to confirm SSD characteristics.</p>
+                      </div>
+                    </div>
                   </div>
                 </details>
               </div>
@@ -708,62 +722,97 @@ In particular, SciDataCopilot achieves over 30× efficiency gains for cross-disc
                     <span>Plan</span>
                   </summary>
                   <div class="case-collapse-body">
-                    <ul>
-                      <li>{</li>
-                      <li>  "plan_id": "70d20a03-8fc8-4603-b01b-ee600d518077",</li>
-                      <li>  "name": "Custom Processing Plan",</li>
-                      <li>  "description": "Rule-based plan for custom task",</li>
-                      <li>  "objective": "对数据进行合并整合，涉及变量: 月",</li>
-                      <li>  "data_unit_plans": [</li>
-                      <li>    {</li>
-                      <li>      "unit_id": "unit_1",</li>
-                      <li>      "unit_name": "Data Loading",</li>
-                      <li>      "source_path": "",</li>
-                      <li>      "processing_description": "Load and inspect data",</li>
-                      <li>      "suggested_tools": [</li>
-                      <li>        "pandas_reader",</li>
-                      <li>        "data_inspector"</li>
-                      <li>      ],</li>
-                      <li>      "parameters": {},</li>
-                      <li>      "priority": 1,</li>
-                      <li>      "dependencies": []</li>
-                      <li>    },</li>
-                      <li>    {</li>
-                      <li>      "unit_id": "unit_2",</li>
-                      <li>      "unit_name": "Data Processing",</li>
-                      <li>      "source_path": "",</li>
-                      <li>      "processing_description": "对数据进行合并整合，涉及变量: 月",</li>
-                      <li>      "suggested_tools": [</li>
-                      <li>        "custom_processor"</li>
-                      <li>      ],</li>
-                      <li>      "parameters": {},</li>
-                      <li>      "priority": 2,</li>
-                      <li>      "dependencies": [</li>
-                      <li>        "unit_1"</li>
-                      <li>      ]</li>
-                      <li>    }</li>
-                      <li>  ],</li>
-                      <li>  "integration_description": "Integrate processed results and export",</li>
-                      <li>  "integration_tools": [</li>
-                      <li>    "quality_check",</li>
-                      <li>    "output_formatter"</li>
-                      <li>  ],</li>
-                      <li>  "total_steps": 3,</li>
-                      <li>  "estimated_complexity": "low",</li>
-                      <li>  "validation_status": "pending",</li>
-                      <li>  "revision_history": [</li>
-                      <li>    {</li>
-                      <li>      "version": 1,</li>
-                      <li>      "source": "llm_generation"</li>
-                      <li>    },</li>
-                      <li>    {</li>
-                      <li>      "version": 2,</li>
-                      <li>      "feedback": "Overall Score: 0.60\nStatus: NEEDS REVISION\n\nCompleteness: 1.00 [PASS]\nFeasibility: 0.80 [PASS]\n  - Issue: First step has no source path\nLogical Consistency: 0.00 [FAIL]\n  - Issue: Invalid dependency: 输入盘点与元数据确认 not in plan\n  - Issue: Invalid dependency: “月”字段抽取结果校验与解析 not in plan\n  - Issue: Invalid dependency: 标准化“月”时间键 not in plan",</li>
-                      <li>      "source": "llm_revision"</li>
-                      <li>    }</li>
-                      <li>  ]</li>
-                      <li>}</li>
-                    </ul>
+                    <div class="case-plan">
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">Plan metadata</div>
+                        <div class="case-metadata-grid">
+                          <div class="case-metadata-item">
+                            <span class="case-metadata-label">Plan ID</span>
+                            <span class="case-metadata-value">70d20a03-8fc8-4603-b01b-ee600d518077</span>
+                          </div>
+                          <div class="case-metadata-item">
+                            <span class="case-metadata-label">Name</span>
+                            <span class="case-metadata-value">Custom Processing Plan</span>
+                          </div>
+                          <div class="case-metadata-item">
+                            <span class="case-metadata-label">Objective</span>
+                            <span class="case-metadata-value">对数据进行合并整合，涉及变量: 月</span>
+                          </div>
+                          <div class="case-metadata-item">
+                            <span class="case-metadata-label">Complexity</span>
+                            <span class="case-metadata-value">Low</span>
+                          </div>
+                          <div class="case-metadata-item">
+                            <span class="case-metadata-label">Total steps</span>
+                            <span class="case-metadata-value">3</span>
+                          </div>
+                          <div class="case-metadata-item">
+                            <span class="case-metadata-label">Validation</span>
+                            <span class="case-metadata-value">Pending</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">Data unit plans</div>
+                        <div class="case-unit-grid">
+                          <div class="case-unit-card">
+                            <div class="case-unit-header">
+                              <span class="case-unit-name">Unit 1 · Data Loading</span>
+                              <span class="case-unit-priority">Priority 1</span>
+                            </div>
+                            <p class="case-unit-desc">Load and inspect data.</p>
+                            <div class="case-unit-row">
+                              <span>Source path</span>
+                              <span>—</span>
+                            </div>
+                            <div class="case-chip-row">
+                              <span class="case-chip-label">Tools</span>
+                              <span class="case-chip">pandas_reader</span>
+                              <span class="case-chip">data_inspector</span>
+                            </div>
+                          </div>
+                          <div class="case-unit-card">
+                            <div class="case-unit-header">
+                              <span class="case-unit-name">Unit 2 · Data Processing</span>
+                              <span class="case-unit-priority">Priority 2</span>
+                            </div>
+                            <p class="case-unit-desc">对数据进行合并整合，涉及变量: 月。</p>
+                            <div class="case-unit-row">
+                              <span>Depends on</span>
+                              <span>Unit 1</span>
+                            </div>
+                            <div class="case-chip-row">
+                              <span class="case-chip-label">Tools</span>
+                              <span class="case-chip">custom_processor</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">Integration & validation</div>
+                        <ul class="case-bullets">
+                          <li>Integrate processed results and export.</li>
+                        </ul>
+                        <div class="case-chip-row">
+                          <span class="case-chip-label">Tools</span>
+                          <span class="case-chip">quality_check</span>
+                          <span class="case-chip">output_formatter</span>
+                        </div>
+                      </div>
+                      <div class="case-plan-group">
+                        <div class="case-plan-title">Revision history</div>
+                        <div class="case-revision">
+                          <div class="case-revision-row">
+                            <span>Version 1</span>
+                            <span>llm_generation</span>
+                          </div>
+                          <div class="case-revision-row">
+                            <span>Version 2</span>
+                            <span>llm_revision · Overall Score 0.60 · Status: NEEDS REVISION</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </details>
                 <details class="case-collapse" open>
@@ -772,147 +821,95 @@ In particular, SciDataCopilot achieves over 30× efficiency gains for cross-disc
                     <span>Analysis</span>
                   </summary>
                   <div class="case-collapse-body">
-                    <ul>
-                      <li>## Processing Summary</li>
-                      <li>### Processing steps performed</li>
-                      <li>Based on the reported outputs and task context (hourly → daily aggregation), the workflow can be interpreted as:</li>
-
-                      <li>1. **Ingestion and parsing**</li>
-                      <li>   - Loaded time-stamped (hourly) observational records from the source dataset(s).</li>
-                      <li>   - Parsed timestamps into a consistent datetime type suitable for resampling/aggregation.</li>
-
-                      <li>2. **Temporal standardization**</li>
-                      <li>   - Harmonized time fields to a consistent temporal axis (e.g., ensuring each record maps unambiguously to an hour and a calendar day).</li>
-                      <li>   - Prepared data for daily roll-up (e.g., extracting date, year-month keys).</li>
-
-                      <li>3. **Hourly → daily aggregation**</li>
-                      <li>   - Aggregated hourly values into daily values using appropriate summary operations (commonly daily mean/sum/min/max depending on variable type).</li>
-                      <li>   - Produced a daily time series for each month.</li>
-
-                      <li>4. **Monthly partitioning and export**</li>
-                      <li>   - Split the resulting daily dataset by month.</li>
-                      <li>   - Exported each month to a separate Excel workbook.</li>
-
-                      <li>### Data transformations applied</li>
-                      <li>- **Datetime conversion and indexing** (enables resampling).</li>
-                      <li>- **Daily aggregation from hourly records** (reduces temporal granularity; typically reduces noise and missingness impact but can hide intra-day variability).</li>
-                      <li>- **Monthly slicing/partitioning** (organizational transformation; improves usability and file size management).</li>
-                      <li>- Potential implicit steps that often accompany this pipeline (not explicitly reported but consistent with the quality improvement):</li>
-                      <li>  - **Handling missing/duplicate timestamps** during grouping.</li>
-                      <li>  - **Type normalization** (numeric columns cast consistently).</li>
-
-                      <li>### Output files generated</li>
-                      <li>A set of monthly Excel files, each representing a month of **daily** aggregated data:</li>
-                      <li>- `data_2005_08.xlsx`</li>
-                      <li>- `data_2005_09.xlsx`</li>
-                      <li>- `data_2005_10.xlsx`</li>
-                      <li>- `data_2005_11.xlsx`</li>
-                      <li>- `data_2005_12.xlsx`</li>
-                      <li>- `data_2006_01.xlsx`</li>
-                      <li>- `data_2006_02.xlsx`</li>
-                      <li>- `data_2006_03.xlsx`</li>
-                      <li>- `data_2006_04.xlsx`</li>
-                      <li>- `data_2006_05.xlsx`</li>
-                      <li>- `data_2006_06.xlsx`</li>
-                      <li>- `data_2006_07.xlsx`</li>
-
-                      <li>Processing status indicates: **Processing success = True**.</li>
-
-                      <li>---</li>
-
-                      <li>## Monthly Files Generated</li>
-
-                      <li>### Count of monthly Excel files</li>
-                      <li>- **12 monthly Excel files** were generated.</li>
-
-                      <li>### Date range covered</li>
-                      <li>- From **August 2005 (2005-08)** through **July 2006 (2006-07)**, inclusive.</li>
-                      <li>- This is a continuous 12-month span.</li>
-
-                      <li>### File organization structure</li>
-                      <li>- **One file per month**, named with a clear `data_YYYY_MM.xlsx` convention.</li>
-                      <li>- This structure is well-suited for:</li>
-                      <li>  - Incremental updates</li>
-                      <li>  - Parallel processing</li>
-                      <li>  - Downstream ingestion</li>
-
-                      <li>---</li>
-
-                      <li>## Aggregation Verification</li>
-
-                      <li>### Verification that hourly → daily aggregation was successful</li>
-                      <li>Evidence supporting successful aggregation:</li>
-                      <li>- The outputs are **monthly** files.</li>
-                      <li>- The **quality scores improved**.</li>
-
-                      <li>### Check for data completeness</li>
-                      <li>At daily resolution, completeness typically means:</li>
-                      <li>- Every expected calendar day is present.</li>
-                      <li>- Missing daily values encoded consistently.</li>
-
-                      <li>### Validate temporal consistency</li>
-                      <li>- Ensure timestamps are monotonic.</li>
-                      <li>- Verify no gaps or overlaps.</li>
-                      <li>- Confirm consistent use of UTC.</li>
-
-                      <li>---</li>
-
-                      <li>## Quality Assessment</li>
-
-                      <li>### Baseline vs current quality scores</li>
-                      <li>**Baseline quality**</li>
-                      <li>- Total: **0.5319**</li>
-                      <li>- Intrinsic: **0.5797**</li>
-                      <li>- Distributional: **0.0000527**</li>
-                      <li>- Utility: **1.0**</li>
-
-                      <li>**Current quality**</li>
-                      <li>- Total: **0.6140**</li>
-                      <li>- Intrinsic: **0.6989**</li>
-                      <li>- Distributional: **0.1150**</li>
-                      <li>- Utility: **1.0**</li>
-
-                      <li>**Net improvement**</li>
-                      <li>- Total score improved by **+0.082**</li>
-
-                      <li>### Interpretation of components</li>
-                      <li>- **Intrinsic quality** improved.</li>
-                      <li>- **Distributional quality** improved.</li>
-                      <li>- **Utility** unchanged.</li>
-
-                      <li>### Data integrity after processing</li>
-                      <li>- Improved integrity.</li>
-                      <li>- Remaining risk areas.</li>
-
-                      <li>---</li>
-
-                      <li>## Recommendations</li>
-
-                      <li>### 1) Add aggregation provenance and coverage metrics</li>
-                      <li>- Include per-day fields.</li>
-                      <li>- Flag low-coverage days.</li>
-
-                      <li>### 2) Perform targeted distributional QA/QC</li>
-                      <li>- Run automated checks.</li>
-                      <li>- Compare monthly histograms.</li>
-
-                      <li>### 3) Validate temporal continuity</li>
-                      <li>- Verify no missing days.</li>
-                      <li>- Ensure consistent timestamps.</li>
-
-                      <li>### 4) Standardize metadata and naming conventions</li>
-                      <li>- Include station/site metadata.</li>
-                      <li>- Include units and processing history.</li>
-
-                      <li>### 5) Next steps for analysis</li>
-                      <li>- Merge monthly files.</li>
-                      <li>- Compute derived indices.</li>
-                      <li>- Assess spatial coherence.</li>
-
-                      <li>---</li>
-
-                      <li>If you can share the column schema, I can propose tailored aggregation and QC rules.</li>
-                    </ul>
+                    <div class="case-sections">
+                      <div class="case-section">
+                        <div class="case-section-title">Processing summary</div>
+                        <ol class="case-steps">
+                          <li>Ingest hourly records and parse timestamps for resampling.</li>
+                          <li>Standardize time fields and derive date/year-month keys.</li>
+                          <li>Aggregate hourly → daily values with variable-appropriate statistics.</li>
+                          <li>Partition by month and export to Excel.</li>
+                        </ol>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Transformations</div>
+                        <ul class="case-bullets">
+                          <li>Datetime conversion and indexing for resampling.</li>
+                          <li>Daily aggregation from hourly records.</li>
+                          <li>Monthly slicing for organization and usability.</li>
+                          <li>Likely handling missing/duplicate timestamps and type normalization.</li>
+                        </ul>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Outputs</div>
+                        <div class="case-file-list">
+                          <span>data_2005_08.xlsx</span>
+                          <span>data_2005_09.xlsx</span>
+                          <span>data_2005_10.xlsx</span>
+                          <span>data_2005_11.xlsx</span>
+                          <span>data_2005_12.xlsx</span>
+                          <span>data_2006_01.xlsx</span>
+                          <span>data_2006_02.xlsx</span>
+                          <span>data_2006_03.xlsx</span>
+                          <span>data_2006_04.xlsx</span>
+                          <span>data_2006_05.xlsx</span>
+                          <span>data_2006_06.xlsx</span>
+                          <span>data_2006_07.xlsx</span>
+                        </div>
+                        <div class="case-inline-note">Processing success: True · 12 monthly files · Aug 2005 → Jul 2006</div>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Quality assessment</div>
+                        <div class="case-metric-grid">
+                          <div class="case-metric-card">
+                            <span class="case-metric-label">Baseline total</span>
+                            <span class="case-metric-value">0.5319</span>
+                          </div>
+                          <div class="case-metric-card">
+                            <span class="case-metric-label">Current total</span>
+                            <span class="case-metric-value">0.6140</span>
+                          </div>
+                          <div class="case-metric-card">
+                            <span class="case-metric-label">Net improvement</span>
+                            <span class="case-metric-value">+0.082</span>
+                          </div>
+                          <div class="case-metric-card">
+                            <span class="case-metric-label">Intrinsic</span>
+                            <span class="case-metric-value">0.5797 → 0.6989</span>
+                          </div>
+                          <div class="case-metric-card">
+                            <span class="case-metric-label">Distributional</span>
+                            <span class="case-metric-value">0.0000527 → 0.1150</span>
+                          </div>
+                          <div class="case-metric-card">
+                            <span class="case-metric-label">Utility</span>
+                            <span class="case-metric-value">1.0 → 1.0</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Aggregation verification</div>
+                        <ul class="case-bullets">
+                          <li>Evidence: monthly outputs and improved quality scores.</li>
+                          <li>Check completeness: every calendar day present.</li>
+                          <li>Validate temporal consistency: monotonic timestamps, no gaps, consistent UTC.</li>
+                        </ul>
+                      </div>
+                      <div class="case-section">
+                        <div class="case-section-title">Recommendations</div>
+                        <ol class="case-steps">
+                          <li>Add aggregation provenance and per-day coverage flags.</li>
+                          <li>Run targeted distributional QA/QC with monthly comparisons.</li>
+                          <li>Validate temporal continuity and timestamp consistency.</li>
+                          <li>Standardize metadata (station, units, processing history).</li>
+                          <li>Next steps: merge monthly files, compute derived indices, assess spatial coherence.</li>
+                        </ol>
+                      </div>
+                      <div class="case-section case-section-highlight">
+                        <div class="case-section-title">Note</div>
+                        <p>If you share the column schema, I can propose tailored aggregation and QC rules.</p>
+                      </div>
+                    </div>
                   </div>
                 </details>
               </div>
